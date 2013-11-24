@@ -1,7 +1,6 @@
 class yum::server {
   $installpath     = $yum::installpath
   $server_name     = $yum::server_name
-  $manage_firewall = $yum::manage_firewall
   $port            = $yum::port
 
   anchor { 'yum::server::start': }
