@@ -1,4 +1,6 @@
-class yum::server {
+class yum::server(
+  $manage_firewall = hiera('manage_firewall', false)
+) {
   $installpath     = $yum::installpath
   $server_name     = $yum::server_name
   $port            = $yum::port
@@ -22,12 +24,13 @@ class yum::server {
     before              => Anchor['yum::server::end'],
   }
 
-  firewall { "200 allow nginx:$port":
-    proto   => 'tcp',
-    state   => ['NEW'],
-    dport   => $port,
-    action  => 'accept',
+  if $manage_firewall {
+    firewall { "200 allow nginx:$port":
+      proto   => 'tcp',
+      state   => ['NEW'],
+      dport   => $port,
+      action  => 'accept',
+    }
   }
-
   anchor { 'yum::server::end': }
 }
