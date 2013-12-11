@@ -30,6 +30,8 @@ class yum::server(
       state   => ['NEW'],
       dport   => $port,
       action  => 'accept',
+      require => Anchor['yum::server::start'],
+      before  => Anchor['yum::server::end'],
     }
   }
   anchor { 'yum::server::end': }
