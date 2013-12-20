@@ -24,8 +24,8 @@ class yum::directories {
    $installpath:
      ensure => directory,
      mode   => '0644',
-     owner  => 'root',
-     group  => 'root',
+     owner  => $yum::user,
+     group  => $yum::deploy_group,
   }
 
   exec { 'createrepo':

@@ -3,10 +3,18 @@ class yum(
   $install_server  = true,
   $server_name     = 'yum.bit',
   $port            = 80,
-  $user            = 'yum'
+  $user            = 'yum',
+  $deploy_group    = 'yummod'
 ) {
 
   anchor { 'yum::start': }
+
+  group { $deploy_group:
+    ensure  => present,
+    system  => true,
+    require => Anchor['yum::start'],
+    before  => Anchor['yum::end'],
+  }
 
   package { 'rpm-build':
     ensure  => present,
