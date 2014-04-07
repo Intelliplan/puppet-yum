@@ -12,15 +12,9 @@ class yum::directories {
     ensure => latest,
   }
 
-  $install_dir_parents = dir_parents($installpath)
+  # $install_dir_parents = dir_parents($installpath)
 
   file {
-    $install_dir_parents:
-      ensure => directory,
-      mode   => '0644',
-      owner  => 'root',
-      group  => 'root';
-
    $installpath:
      ensure => directory,
      mode   => '0644',
